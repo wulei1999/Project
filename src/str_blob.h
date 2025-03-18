@@ -52,10 +52,10 @@ public:
         return ret;
     }
     */
-     StrBlobPtr begin();
-     StrBlobPtr end();
-    //StrBlobPtr begin() const;
-    //StrBlobPtr end() const;
+     //StrBlobPtr begin();
+     //StrBlobPtr end();
+    StrBlobPtr begin() const;
+    StrBlobPtr end() const;
 
 private:
     /* data */

@@ -56,10 +56,10 @@ inline bool eq(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
 inline bool neq(const StrBlobPtr &lhs, const StrBlobPtr &rhs){
     return !eq(lhs, rhs);
 }
-inline StrBlobPtr StrBlob::begin() {
+inline StrBlobPtr StrBlob::begin() const{
     return StrBlobPtr(*this);
 }
-inline StrBlobPtr StrBlob::end() {
+inline StrBlobPtr StrBlob::end() const{
     auto ret = StrBlobPtr(*this, data->size());
     return ret;
 }
