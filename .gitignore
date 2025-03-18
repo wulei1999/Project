@@ -1,1 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
 
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 项目特定
+high_score.json
+assets/sounds/*
+assets/images/*
+assets/fonts/*
+!assets/sounds/.gitkeep
+!assets/images/.gitkeep
+!assets/fonts/.gitkeep
+
+# 编译目录
+build/
+
+# 输入输出文件
+input_word*.txt
+output_word*.txt
+
+# 可执行文件
+testInitializer
+
+# 系统/IDE文件（可选）
+*.swp
+*.bak
+.DS_Store
