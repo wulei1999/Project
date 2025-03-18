@@ -19,6 +19,17 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+# C/C++
+build/
+*.o
+*.a
+*.so
+
+# Java
+*.class
+*.jar
+target/
+
 
 # IDE
 .idea/
@@ -49,3 +60,45 @@ testInitializer
 *.swp
 *.bak
 .DS_Store
+
+*.log      # 忽略所有 .log 文件
+temp-*     # 忽略所有以 temp- 开头的文件
+
+logs/**/*.tmp  # 忽略 logs 目录下所有子目录中的 .tmp 文件
+
+file?.txt  # 忽略 file1.txt、fileA.txt 等
+
+*.txt       # 忽略所有 .txt 文件
+!important.txt  # 但保留 important.txt
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Vim
+*.swp
+*.swo
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# Python
+venv/
+.env
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+*.log
+*.tmp
+*.temp
