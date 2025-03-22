@@ -75,7 +75,8 @@
         "set": "cpp",
         "map": "cpp",
         "sstream": "cpp",
-        "unordered_set": "cpp"
+        "unordered_set": "cpp",
+        "optional": "cpp"
     },
     // 排除的文件和文件夹
     "files.exclude": {

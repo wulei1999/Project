@@ -27,7 +27,12 @@ public:
     typedef vector<string>::size_type size_type;
     StrBlob();
     StrBlob(initializer_list<string> il);
+    StrBlob(const StrBlob &sb) : data(make_shared<vector<string>>(*sb.data)){}
     ~StrBlob();
+    StrBlob &operator=(const StrBlob &rhs){
+        data = make_shared<vector<string>>(*rhs.data);
+        return *this;
+    }
     size_type size() const {
         return data->size();
     }

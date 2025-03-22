@@ -8,7 +8,7 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}","./src/func.cpp",
+                "${file}",
                 "-o",
                 "${workspaceFolder}/build/${fileBasenameNoExtension}",
                 "-std=c++17"
@@ -23,6 +23,6 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
     ]
 }
