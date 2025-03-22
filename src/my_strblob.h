@@ -1,12 +1,12 @@
 #ifndef MY_STRBLOB_H
 #define MY_STRBLOB_H
 
+#include <initializer_list>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <initializer_list>
 
 using std::begin;
 using std::cin;
@@ -17,10 +17,10 @@ using std::initializer_list;
 using std::istream;
 using std::make_shared;
 using std::out_of_range;
+using std::runtime_error;
 using std::shared_ptr;
 using std::string;
 using std::vector;
-using std::runtime_error;
 using std::weak_ptr;
 
 class StrBlobPtr;
@@ -40,6 +40,9 @@ public:
     }
     void push_back(const string &t) {
         data->push_back(t);
+    }
+    void push_back(string &&t) {
+        data->push_back(std::move(t));
     }
     void pop_back();
     string &front();
@@ -98,18 +101,17 @@ inline void StrBlob::pop_back() {
     data->pop_back();
 }
 
-
 class StrBlobPtr {
 public:
     friend bool eq(const StrBlobPtr &, const StrBlobPtr &);
     StrBlobPtr() : curr(0) {}
-    //StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
+    // StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
     StrBlobPtr(const StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
     ~StrBlobPtr();
     string &deref() const;
     string &deref(int off) const;
     StrBlobPtr &incr();
-    
+
 private:
     /* data */
     size_t curr;
@@ -152,20 +154,20 @@ inline bool eq(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
         return false;
     }
 }
-inline bool neq(const StrBlobPtr &lhs, const StrBlobPtr &rhs){
+inline bool neq(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
     return !eq(lhs, rhs);
 }
-inline StrBlobPtr StrBlob::begin(){
+inline StrBlobPtr StrBlob::begin() {
     return StrBlobPtr(*this);
 }
-inline StrBlobPtr StrBlob::end(){
+inline StrBlobPtr StrBlob::end() {
     auto ret = StrBlobPtr(*this, data->size());
     return ret;
 }
-inline StrBlobPtr StrBlob::begin() const{
+inline StrBlobPtr StrBlob::begin() const {
     return StrBlobPtr(*this);
 }
-inline StrBlobPtr StrBlob::end() const{
+inline StrBlobPtr StrBlob::end() const {
     auto ret = StrBlobPtr(*this, data->size());
     return ret;
 }

@@ -1,11 +1,11 @@
 #include "hasptr.h"
 
 #if 1
-//类值拷贝赋值运算符函数和析构函数
-inline HasPtr & HasPtr::operator=(const HasPtr &rhs){
-    auto p = new string(*rhs.ps);//先拷贝右侧对象，处理自赋值情况，保证异常发生的时候也是安全的
-    delete ps;//在销毁左侧运算对象，释放就内存，保证安全,先delete后赋值的话的话，发生异常原本数据就没了
-    //ps = new string(*rhs.ps);//这样会导致释放不了旧内存
+// 类值拷贝赋值运算符函数和析构函数
+inline HasPtr &HasPtr::operator=(const HasPtr &rhs) {
+    auto p = new string(*rhs.ps);  // 先拷贝右侧对象，处理自赋值情况，保证异常发生的时候也是安全的
+    delete ps;  // 在销毁左侧运算对象，释放就内存，保证安全,先delete后赋值的话的话，发生异常原本数据就没了
+    // ps = new string(*rhs.ps);//这样会导致释放不了旧内存
     ps = p;
     i = rhs.i;
     return *this;
@@ -19,7 +19,25 @@ inline HasPtr &HasPtr::operator=(const string &str) {
     *ps = str;
     return *this;
 }
+inline HasPtr &HasPtr::operator=(HasPtr &&rhs) {
+    // TODO: 在此处插入 return 语句
+    cout << "移动赋值运算" << endl;
+    if(this != &rhs){
+        delete ps;
+        ps = rhs.ps;
+        rhs.ps = nullptr;
+        rhs.i = 0;
+    }
+    return *this;
+}
+
 #if 0
+HasPtr &HasPtr::operator=(HasPtr &&rhs) {
+    // TODO: 在此处插入 return 语句
+    swap(*this, rhs);
+    return *this;
+}
+
 inline HasPtr &HasPtr::operator=(const HasPtr &rhs) {
     ++*(rhs.use);
     if (--*use == 0) {
@@ -32,25 +50,26 @@ inline HasPtr &HasPtr::operator=(const HasPtr &rhs) {
     return *this;
 }
 
+
+
 HasPtr::~HasPtr() {
     if (--*use == 0) {
         delete ps;
         delete use;
     }
 }
-#endif
-/*
 inline HasPtr &HasPtr::operator=(HasPtr rhs) {
     swap(*this, rhs);  // 用的自定义版本的swap
     return *this;
 }
-*/
+#endif
+
 string &HasPtr::operator*() {
     return *ps;
 }
 
-bool HasPtr::operator<(const HasPtr &rhs) const{
-    //return *ps < *rhs.ps;//按string排序
+bool HasPtr::operator<(const HasPtr &rhs) const {
+    // return *ps < *rhs.ps;//按string排序
     return stoi(*ps) < stoi(*rhs.ps);
 }
 
@@ -79,15 +98,15 @@ int main() {
 int main(int agrc, char *argv[]) {
     vector<HasPtr> vh;
     int n = atoi(argv[1]);
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         vh.push_back(std::to_string(n - i));
     }
-    for(auto p : vh){
+    for (auto p : vh) {
         cout << *p << " ";
     }
     cout << endl;
     std::sort(vh.begin(), vh.end());
-    for(auto p : vh){
+    for (auto p : vh) {
         cout << *p << " ";
     }
     cout << endl;

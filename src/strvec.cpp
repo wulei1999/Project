@@ -1,5 +1,7 @@
 #include "strvec.h"
 
+allocator<string> StrVec::alloc;  // 静态成员类外定义
+
 pair<string *, string *> StrVec::alloc_n_copy(const string *b, const string *e) {
     auto data = alloc.allocate(e - b);
 
@@ -7,7 +9,7 @@ pair<string *, string *> StrVec::alloc_n_copy(const string *b, const string *e) 
 }
 
 void StrVec::free() {
-#if 1
+#if 0
     if (element) {
         auto beg = element;
         while (beg != first_free) {
@@ -24,6 +26,10 @@ void StrVec::free() {
         alloc.deallocate(element, cap - element);
     }
 #endif
+    if (element) {
+        for_each(element, first_free, [](const string &s) { alloc.destroy(&s); });
+        alloc.deallocate(element, cap - element);
+    }
 }
 
 void StrVec::reallocate() {
@@ -82,6 +88,17 @@ StrVec &StrVec::operator=(const StrVec &rhs) {
     return *this;
 }
 
+StrVec &StrVec::operator=(StrVec &&rhs) noexcept {
+    // TODO: 在此处插入 return 语句
+    if (this != &rhs) {
+        free();
+        element = rhs.element;
+        first_free = rhs.first_free;
+        cap = rhs.cap;
+        rhs.element = rhs.first_free = rhs.cap = nullptr;
+    }
+    return *this;
+}
 
 void StrVec::reserve(size_t sz) {
     if (whole_cap() >= sz)
@@ -109,3 +126,6 @@ void StrVec::resize(size_t sz, const string &s) {
     }
 }
 
+int main() {
+    return 0;
+}

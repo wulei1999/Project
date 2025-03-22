@@ -16,6 +16,7 @@ using std::cin;
 using std::cout;
 using std::end;
 using std::endl;
+using std::for_each;
 using std::initializer_list;
 using std::istream;
 using std::make_shared;
@@ -29,7 +30,7 @@ using std::vector;
 class StrVec {
 private:
     /* data */
-    allocator<string> alloc;  // 静态成员需要类外定义
+    static allocator<string> alloc;  // 静态成员需要类外定义
 
     string *element;
     string *first_free;
@@ -48,8 +49,12 @@ public:
     StrVec() : element(nullptr), first_free(nullptr), cap(nullptr) {}
     StrVec(const StrVec &);
     StrVec(const initializer_list<string>&);
+    StrVec(StrVec &&s) noexcept : element(s.element), first_free(s.first_free), cap(s.cap){
+        s.element = s.first_free = s.cap = nullptr; //移动构造函数令右值析构时安全
+    }
     ~StrVec();
     StrVec &operator=(const StrVec &);
+    StrVec &operator=(StrVec &&)noexcept;
     void push_back(const string &);
     size_t size() {
         return first_free - element;

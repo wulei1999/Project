@@ -37,12 +37,17 @@ private:
     void remove_from_folders();
     void add_fldr(Folder *);
     void rem_fldr(Folder *);
+    void move_folders(Message *m);
 
 public:
     explicit Message(const string &str = "") : contents(str) {}
     Message(const Message &);
+    Message(Message &&m) noexcept : contents(std::move(m.contents)){
+        move_folders(&m);
+    }
     ~Message();
     Message &operator=(const Message &);
+    Message &operator=(Message &&) noexcept;
 
     void save(Folder &);
     void remove(Folder &);
