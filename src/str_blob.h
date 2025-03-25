@@ -1,11 +1,11 @@
 #ifndef STR_BLOB_H
 #define STR_BLOB_H
+#include <initializer_list>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <initializer_list>
 
 using std::begin;
 using std::cin;
@@ -22,14 +22,22 @@ using std::vector;
 
 class StrBlobPtr;
 class StrBlob {
+    friend bool operator==(const StrBlob &, const StrBlob &);
+    friend bool operator!=(const StrBlob &, const StrBlob &);
+    friend bool operator<(const StrBlob &, const StrBlob &);
+    friend bool operator<=(const StrBlob &, const StrBlob &);
+    friend bool operator>(const StrBlob &, const StrBlob &);
+    friend bool operator>=(const StrBlob &, const StrBlob &);
+
+
 public:
     friend class StrBlobPtr;
     typedef vector<string>::size_type size_type;
     StrBlob();
     StrBlob(initializer_list<string> il);
-    StrBlob(const StrBlob &sb) : data(make_shared<vector<string>>(*sb.data)){}
+    StrBlob(const StrBlob &sb) : data(make_shared<vector<string>>(*sb.data)) {}
     ~StrBlob();
-    StrBlob &operator=(const StrBlob &rhs){
+    StrBlob &operator=(const StrBlob &rhs) {
         data = make_shared<vector<string>>(*rhs.data);
         return *this;
     }
@@ -57,11 +65,16 @@ public:
         return ret;
     }
     */
-     //StrBlobPtr begin();
-     //StrBlobPtr end();
+    // StrBlobPtr begin();
+    // StrBlobPtr end();
     StrBlobPtr begin() const;
     StrBlobPtr end() const;
-
+    string &operator[](size_t n){
+        return (*data)[n];
+    }
+    const string &operator[](size_t n) const{
+        return (*data)[n];
+    }
 private:
     /* data */
     shared_ptr<vector<string>> data;
@@ -98,4 +111,27 @@ inline void StrBlob::pop_back() {
     data->pop_back();
 }
 
+bool operator==(const StrBlob &lhs, const StrBlob &rhs) {
+    if (lhs.data == rhs.data)
+        return true;
+    else
+        return false;
+}
+
+bool operator!=(const StrBlob &lhs, const StrBlob &rhs) {
+    return !(lhs == rhs);
+}
+
+bool operator<(const StrBlob &lhs, const StrBlob &rhs) {
+    return *lhs.data < *rhs.data;
+}
+inline bool operator<=(const StrBlob &lhs, const StrBlob &rhs) {
+    return *lhs.data <= *rhs.data;
+}
+inline bool operator>(const StrBlob &lhs, const StrBlob &rhs) {
+    return *lhs.data > *rhs.data;
+}
+inline bool operator>=(const StrBlob &lhs, const StrBlob &rhs) {
+    return *lhs.data >= *rhs.data;
+}
 #endif /* STR_BLOB_H */

@@ -87,6 +87,24 @@ std::ostream &print(std::ostream &os, const String &str) {
     }
     return os;
 }
+bool operator==(const String &lhs, const String &rhs) {
+    return strcmp(lhs.p, rhs.p);
+}
+bool operator!=(const String &lhs, const String &rhs) {
+    return !(lhs == rhs);
+}
+bool operator<(const String &lhs, const String &rhs) {
+    return strcmp(lhs.p, rhs.p);
+}
+bool operator<=(const String &lhs, const String &rhs) {
+    return strcmp(lhs.p, rhs.p);
+}
+bool operator>(const String &lhs, const String &rhs) {
+    return strcmp(lhs.p, rhs.p);;
+}
+bool operator>=(const String &lhs, const String &rhs) {
+    return strcmp(lhs.p, rhs.p);
+}
 String make_pluarl(size_t ctr, const String &word, const String &ending) {
     return (ctr != 1) ? add(word, ending) : word;
 }

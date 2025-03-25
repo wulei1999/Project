@@ -11,7 +11,12 @@ class String {
     friend String add(const String &, const String &);
     friend std::ostream &operator<<(std::ostream &, const String &);
     friend std::ostream &print(std::ostream &, const String &);
-
+    friend bool operator==(const String &, const String &);
+    friend bool operator!=(const String &, const String &);
+    friend bool operator<(const String &, const String &);
+    friend bool operator<=(const String &, const String &);
+    friend bool operator>(const String &, const String &);
+    friend bool operator>=(const String &, const String &);
 private:
     /* data */
     size_t sz;
@@ -46,7 +51,12 @@ public:
 public:
     String &operator=(const char *);
     String &operator=(char);
-
+    char &operator[](size_t n) {
+        return p[n];
+    }
+    const char &operator[](size_t n) const {
+        return (char)p[n];
+    }
     const char *begin() {
         return p;
     }

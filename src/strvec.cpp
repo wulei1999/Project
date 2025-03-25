@@ -100,6 +100,15 @@ StrVec &StrVec::operator=(StrVec &&rhs) noexcept {
     return *this;
 }
 
+StrVec &StrVec::operator=(const initializer_list<string> &li) {
+    // TODO: 在此处插入 return 语句
+    auto data = alloc_n_copy(li.begin(), li.end());
+    free();
+    element = data.first;
+    first_free = cap = data.second;
+    return *this;
+}
+
 void StrVec::reserve(size_t sz) {
     if (whole_cap() >= sz)
         return;
@@ -128,4 +137,52 @@ void StrVec::resize(size_t sz, const string &s) {
 
 int main() {
     return 0;
+}
+
+bool operator==(const StrVec &lhs, const StrVec &rhs) {
+    if (lhs.size() != rhs.size())
+        return false;
+    for (auto b_lhs = lhs.begin(), b_rhs = rhs.begin(); b_lhs != lhs.end(); ++b_lhs, ++b_rhs) {
+        if (*b_lhs != *b_rhs)
+            return false;
+    }
+    return true;
+}
+
+bool operator!=(const StrVec &lhs, const StrVec &rhs) {
+    return !(lhs == rhs);
+}
+
+bool operator<(const StrVec &lhs, const StrVec &rhs) {
+    for (auto b_lhs = lhs.begin(), b_rhs = rhs.begin(); b_lhs != lhs.end() && b_rhs != rhs.end();
+         ++b_lhs, ++b_rhs) {
+        if (*b_lhs < *b_rhs)
+            return true;
+        else if (*b_lhs > *b_rhs)
+            return false;
+    }
+    if (lhs.size() < rhs.size())
+        return true;
+    return false;
+}
+
+bool operator<=(const StrVec &lhs, const StrVec &rhs) {
+    for (auto b_lhs = lhs.begin(), b_rhs = rhs.begin(); b_lhs != lhs.end() && b_rhs != rhs.end();
+         ++b_lhs, ++b_rhs) {
+        if (*b_lhs <= *b_rhs)
+            return true;
+        else if (*b_lhs > *b_rhs)
+            return false;
+    }
+    if (lhs.size() <= rhs.size())
+        return true;
+    return false;
+}
+
+bool operator>(const StrVec &lhs, const StrVec &rhs) {
+    return !(lhs <= rhs);
+}
+
+bool operator>=(const StrVec &lhs, const StrVec &rhs) {
+    return !(lhs < rhs);
 }
