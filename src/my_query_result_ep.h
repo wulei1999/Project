@@ -26,6 +26,7 @@ using std::vector;
 using std::ostream;
 class QueryResultEp {
     friend ostream &print(ostream &, const QueryResultEp &);
+    friend ostream &print(ostream &, const QueryResultEp &, int, int);
 
 public:
     typedef vector<string>::size_type line_no;
